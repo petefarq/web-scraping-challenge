@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mars Info</title>
+  <!-- Bootstrap Components--> 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body class= "bg-dark text-light font-weight-light">
+  {% block content %}
+  <div class="container">
+    <!--- Button to initiate scraping -->
+    
+    <div class="row">
+      <div class="col-md-10 sm-9 m-2 border border-info">
+        <div class="text-center bg-dark font-weight-light p-4">
+           <h1 class ="display-4">Get Mars Data</h1>
+            <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Data!</a></p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Checks to see if data is available-- if not skips below to render blank page-->
+  {% if mars_data_web is not none %}
+    
+  <!-- Mars Info Output -->
+  <div class="row">
+      <div class="col-md-10 col-sm-9 justify-content-start m-2 p-3 border border-info">
+          <h4 class ="font-weight-light">Latest Mars News</h4>    
+          <h3 class ="font-weight-light">{{mars_data_web.NewsTitle}}</h3>
+          <p>{{mars_data_web.NewsSummary}}</p>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-5 col-sm-9 m-1 border border-info p-3">
+          <h3 class ="font-weight-light">Current Mars Weather</h3>
+          <p>{{mars_data_web.MarsWeather}}</p>
+      </div>
+
+      <div class="col-md-5 col-sm-9 mt-1 mb-1 ml-1 mr--1 border border-info p-3">
+          <h3 class="font-weight-light">Mars Facts</h3>
+          <div>{{mars_data_web.MarsFacts | safe }}</div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12 justify-content-center pt-4 pb-4">
+          <h3 class= "font-weight-light">Mars Hemispheres</h3>    
+      </div>
+    </div>
+    
+   <!-- 4x4 row and column grid for hemispheres-- collapses at smaller sizes-->
+    <div class="row">
+      <div class="col-md-4 col-sm-9 m-2 p-2 border border-info">
+          <img class="img-fluid pb-4" src="{{mars_data_web.Hemi1url}}" alt="Mars Hemisphere" width="450px" height="450px">
+      </div>
+      
+      <div class="col-md-4 col-sm-9 m-2 p-2 border border-info">
+        <img class="img-fluid pb-4" src="{{mars_data_web.Hemi2url}}" alt="Mars Hemisphere" width="450px" height="450px">
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 col-sm-9 m-2 p-2 border border-info">
+          <img class="img-fluid pb-4" src="{{mars_data_web.Hemi3url}}" alt="Mars Hemisphere" width="450px" height="450px">
+      </div>
+      
+      <div class="col-md-4 col-sm-9 m-2 p-2 border border-info">
+          <img class="img-fluid pb-4" src="{{mars_data_web.Hemi4url}}" alt="Mars Hemisphere" width="450px" height="450px">
+      </div>
+
+    </div>
+
+  </div>
+  
+  <!-- From above if statement-- If there is no data available, will render this blank div-->
+  {% else %}
+        <div></div>
+    {% endif %}
+  
+    {% endblock content %}
+</body>
+
+</html>
+
